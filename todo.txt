@@ -4,6 +4,6 @@ Backend
     - npm install
     - npm i express cors dotenv mongodb
 Frontend
-    - 
-    -
-    -
+    - react
+    - react royuter dom
+    - react helmet async
