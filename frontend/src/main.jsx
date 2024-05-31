@@ -8,6 +8,8 @@ import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import { HelmetProvider } from 'react-helmet-async';
+import AuthProvider from './Components/AuthProvider/AuthProvider';
+import WhyUs from './Components/WhyUS/WhyUs';
 
 const router = createBrowserRouter([
   {
@@ -27,12 +29,18 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register/>,
       },
+      {
+        path: "/whyus",
+        element: <WhyUs/>,
+      },
   ]}]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </HelmetProvider>
   </React.StrictMode>,
 )
