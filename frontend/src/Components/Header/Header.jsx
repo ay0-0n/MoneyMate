@@ -2,9 +2,8 @@
 
 const Header = () => {
     return (
-        <div>
+        <div className=" text-2xl text-emerald-300">
             header
-            
         </div>
     );
 };
