@@ -12,6 +12,7 @@
   "dependencies": {
     "aos": "^2.3.4",
     "axios": "^1.7.2",
+    "jwt-decode": "^4.0.0",
     "localforage": "^1.10.0",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.4",

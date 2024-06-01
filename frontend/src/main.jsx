@@ -10,6 +10,8 @@ import Register from './Components/Register/Register';
 import { HelmetProvider } from 'react-helmet-async';
 import AuthProvider from './Components/AuthProvider/AuthProvider';
 import WhyUs from './Components/WhyUS/WhyUs';
+import Dashboard from './Components/Dashboard/Dashboard';
+import PrivateRoute from './Components/Routes/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
         path: "/whyus",
         element: <WhyUs/>,
       },
+      {
+        path:"/dashboard",
+        element: <PrivateRoute><Dashboard/></PrivateRoute>
+      }
   ]}]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

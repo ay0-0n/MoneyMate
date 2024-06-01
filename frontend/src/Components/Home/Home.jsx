@@ -2,6 +2,7 @@ import Lottie from "lottie-react";
 import banner from "./../../assets/banner.json";
 import { Link } from "react-router-dom";
 import AboutUs from "./AboutUs/AboutUs";
+import Footer from "../Footer/Footer";
 
 const Home = () => {
     return (
@@ -25,6 +26,7 @@ const Home = () => {
         </section>
 
         <AboutUs />
+        <Footer/>
         </>
 
     );

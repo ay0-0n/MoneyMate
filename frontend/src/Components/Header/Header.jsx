@@ -5,6 +5,7 @@ import { FaAngleDown } from "react-icons/fa6";
 
 const Header = () => {
     const { user } = useContext(AuthContext);
+    console.log('header',user);
   return (
     <header className=" bg-white shadow sticky top-0 z-50 w-full">
         <nav className="flex justify-between items-center py-3 container mx-auto bg-white">
@@ -18,10 +19,10 @@ const Header = () => {
             <div>
             {user ? (
               <div className="flex gap-4">
-                <div>
-                  hi, {user?.name}
+                <div className="flex justify-center items-center">
+                  hi, <span className="text-green-600">{user?.username}</span> 
                 </div>
-                <button className=" text-black font-space-4 border-black border-[1px] px-3 hover:shadow-xl rounded-md">
+                <button className=" text-white font-space-4 border-[1px] hover:bg-green-600 px-3 py-1  hover:shadow-xl rounded-md bg-blue-950">
                   Logout
                 </button>
               </div>
