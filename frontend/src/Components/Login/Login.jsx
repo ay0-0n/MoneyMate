@@ -42,12 +42,12 @@ const Login = () => {
             <form className='space-y-4 w-full max-w-sm' onSubmit={handleLogin}>
               <div>
                 <label className='block mb-1 text-gray-600'>Email</label>
-                <input name='email' type='email' className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' required />
+                <input name='email' type='email' className='w-full px-4 py-2 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' required />
               </div>
               <div>
                 <label className='block mb-1 text-gray-600'>Password</label>
                 <div className="relative">
-                  <input name='pass' type={eye ? "text" : "password"} className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' required />
+                  <input name='pass' type={eye ? "text" : "password"} className='w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500' required />
                   <span className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" onClick={() => setEye(!eye)}>
                     {eye ? <FaEye /> : <FaEyeSlash />}
                   </span>

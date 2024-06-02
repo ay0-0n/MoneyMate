@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
-import { jwtDecode } from "jwt-decode";
+
 
 export const AuthContext = createContext(null);
 
@@ -19,12 +19,10 @@ const AuthProvider = ({ children }) => {
             if (response.data.error) {
                 setError(response.data.error);
             } else {
-                console.log(response.data);
                 setUser(response.data.user);
                 setLoading(false);
-                console.log(response.data.token);
-                const decodedHeader = jwtDecode(response.data.token);
-                console.log('decodedHeader', decodedHeader);
+                
+                localStorage.setItem('token', response.data.token);
                 navigate('/dashboard');
             }
         } catch (error) {
@@ -33,7 +31,9 @@ const AuthProvider = ({ children }) => {
     };
 
     const signOut = async () => {
-        // Implementation for signOut
+        setUser(null);
+        setLoading(false)
+        localStorage.removeItem('token');
     };
 
     const signUp = async (username, email, password, setError, navigate) => {
