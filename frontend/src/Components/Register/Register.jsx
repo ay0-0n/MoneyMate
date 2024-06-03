@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
 import { AuthContext } from '../AuthProvider/AuthProvider';
+import { Toaster } from 'react-hot-toast';
 
 const Register = () => {
   const [eye, setEye] = useState(false);
@@ -33,6 +34,7 @@ const Register = () => {
       <Helmet>
         <title>MoneyMate - Register</title>
       </Helmet>
+      <div><Toaster/></div>
       <div className='min-h-[90vh] bg-[#F6F5F0] flex justify-center items-center p-4'>
         <div className="container bg-white rounded-xl flex flex-col lg:flex-row justify-between w-full lg:w-4/5 h-auto lg:min-h-[70vh] overflow-hidden shadow-lg">
           <div className="w-full lg:w-1/2 flex items-center justify-center bg-blue-950 relative h-64 lg:h-auto p-4">

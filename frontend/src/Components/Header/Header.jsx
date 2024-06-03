@@ -10,7 +10,7 @@ const Header = () => {
     <header className=" bg-white shadow sticky top-0 z-50 w-full">
         <nav className="flex justify-between items-center py-3 container mx-auto bg-white">
             {user? (
-              <Link to="/dashboard"><button className="btn btn-ghost text-2xl text-green-600 hover:bg-white hover:shadow-md font-bold    px-1 md:p-0">MoneyMate</button></Link>
+              <Link to="/dashboard"><button className="btn btn-ghost text-2xl text-green-600 hover:bg-white hover:shadow-md font-bold    px-1 md:p-0 ml-2 md:ml-0">MoneyMate</button></Link>
             ):(
               <Link to="/"><button className="btn btn-ghost text-2xl text-green-600 hover:bg-white hover:shadow-md font-bold    px-1 md:p-0">MoneyMate</button></Link>
             )}
@@ -29,7 +29,7 @@ const Header = () => {
                 <div className="flex justify-center items-center">
                   hi, <span className="text-green-600">{user?.username}</span> 
                 </div>
-                <button onClick={signOut} className=" text-white font-space-4 border-[1px] hover:bg-green-600 px-3 py-1  hover:shadow-xl rounded-md bg-blue-950">
+                <button onClick={signOut} className=" text-white font-space-4 border-[1px] hover:bg-green-600 px-3 py-1  hover:shadow-xl rounded-md bg-blue-950  mr-2 md:mr-0">
                   Logout
                 </button>
               </div>
@@ -41,7 +41,7 @@ const Header = () => {
                   </button>
                 </Link>
                 <Link to="/register">
-                  <button className=" text-white font-space-4 border-[1px] border-blue-950 hover:bg-green-600 px-3 py-1  hover:shadow-xl rounded-md bg-blue-950">
+                  <button className=" text-white font-space-4 border-[1px] border-blue-950 hover:bg-green-600 px-3 py-1  hover:shadow-xl rounded-md bg-blue-950 mr-2 md:mr-0">
                     Register
                   </button>
                 </Link>

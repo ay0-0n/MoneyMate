@@ -2,6 +2,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FaUserFriends, FaChartLine, FaShieldAlt, FaSyncAlt, FaClipboardList, FaWallet, FaBullseye, FaCogs } from 'react-icons/fa';
 import { useEffect } from 'react';
+import Footer from '../Footer/Footer';
 
 const features = [
     {
@@ -48,7 +49,9 @@ const features = [
 
 const WhyUs = () => {
     useEffect(() => {
-        AOS.init();
+        AOS.init({
+            offset:100
+        });
         AOS.refresh();
     }, []);
     return (
@@ -66,6 +69,9 @@ const WhyUs = () => {
                         </div>
                     ))}
                 </div>
+            </div>
+            <div className='mt-6'>
+                <Footer />
             </div>
         </section>
     );

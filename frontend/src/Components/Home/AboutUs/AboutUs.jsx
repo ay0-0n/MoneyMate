@@ -1,7 +1,6 @@
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
-
 const AboutUs = () => {
     useEffect(() => {
         AOS.init();
@@ -9,15 +8,16 @@ const AboutUs = () => {
     }, []);
 
     return (
-        <section className="flex flex-col md:flex-row py-12 mt-6">
-            <div className="w-full md:w-1/2 flex justify-center items-center">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdtLH5URhKgipQtkjqaF3W_gIKuOycVN3NWA&s" alt="About Us" className="w-3/4 h-auto" />
-            </div>
-            <div className="w-full md:w-1/2 px-5">
-                <h2 className="text-4xl font-bold text-right text-blue-950 mb-6">About Us</h2>
-                <p className="text-right text-gray-700 mb-10" data-aos="fade-up">
-                    At MoneyMate, our mission is to empower individuals to take control of their finances through innovative and user-friendly solutions. Our team is dedicated to providing the best financial management tools to help you achieve your financial goals.
+        <section className=" py-12 mt-12 lg:mt-24">
+            <div className="container mx-auto px-5">
+                <div className=' w-3/4 mx-auto'>
+                <h2 className="text-4xl font-bold text-center text-blue-950 mb-6">About Us</h2>
+                <p className="text-center text-gray-700 mb-10" data-aos="fade-up">
+                At MoneyMate, our mission is more than just a statement - it’s a commitment to our users. We strive to empower individuals, giving them the tools and knowledge they need to take control of their finances. Our innovative and user-friendly solutions are designed with the user in mind, making financial management not just accessible, but also intuitive and engaging.
+                <br/>
+                Our team, a diverse group of dedicated professionals, works tirelessly to ensure that we are providing the best financial management tools available. We believe that everyone deserves the opportunity to achieve their financial goals, and we are committed to making that a reality for our users. We continuously seek to improve and expand our offerings, staying at the forefront of financial technology to deliver the most effective solutions.
                 </p>
+                </div>
             </div>
         </section>
     );

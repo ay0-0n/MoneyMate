@@ -12,6 +12,10 @@ import AuthProvider from './Components/AuthProvider/AuthProvider';
 import WhyUs from './Components/WhyUS/WhyUs';
 import Dashboard from './Components/Dashboard/Dashboard';
 import PrivateRoute from './Components/Routes/PrivateRoute';
+import Income from './Components/Income/Income';
+import Expense from './Components/Expense/Expense';
+import Goals from './Components/Goals/Goals';
+import Visuals from './Components/Visuals/Visuals';
 
 const router = createBrowserRouter([
   {
@@ -37,7 +41,29 @@ const router = createBrowserRouter([
       },
       {
         path:"/dashboard",
-        element: <PrivateRoute><Dashboard/></PrivateRoute>
+        element: <PrivateRoute><Dashboard/></PrivateRoute>,
+        children: [
+          // {
+          //   path: "/dashboard/profile",
+          //   element: <p>Home<p/>,
+          // },
+          {
+            path: "/dashboard/income",
+            element: <Income/>,
+          },
+          {
+            path: "/dashboard/expenses",
+            element: <Expense/>,
+          },
+          {
+            path: "/dashboard/goals",
+            element: <Goals/>,
+          },
+          {
+            path: "/dashboard/visuals",
+            element: <Visuals/>,
+          },
+        ]
       }
   ]}]);
 

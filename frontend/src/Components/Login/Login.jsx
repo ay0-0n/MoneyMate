@@ -3,10 +3,12 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
 import { AuthContext } from '../AuthProvider/AuthProvider';
+import { Toaster } from 'react-hot-toast';
 
 const Login = () => {
   const [eye, setEye] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { signIn } = useContext(AuthContext);
 
@@ -17,15 +19,17 @@ const Login = () => {
       setError("Password must be at least 6 characters long");
       return;
     }
-    signIn(email.value, pass.value, setError, navigate);
+    setLoading(true);
+    await signIn(email.value, pass.value, setError, navigate);
+    setLoading(false);
   }
-
 
   return (
     <>
       <Helmet>
         <title>MoneyMate - Login</title>
       </Helmet>
+      <Toaster/>
       <div className='min-h-[90vh] bg-[#F6F5F0] flex justify-center items-center p-4'>
         <div className="container bg-white rounded-xl flex flex-col lg:flex-row justify-between w-full lg:w-4/5 h-auto lg:min-h-[70vh] overflow-hidden shadow-lg">
           <div className="w-full lg:w-1/2 flex items-center justify-center bg-blue-950 relative h-64 lg:h-auto p-4">
@@ -53,7 +57,9 @@ const Login = () => {
                   </span>
                 </div>
               </div>
-              <button type='submit' className='w-full py-2 hover:bg-green-600 bg-blue-950 text-white rounded-md transition duration-300'>Login</button>
+              <button type='submit' className='w-full py-2 hover:bg-green-600 bg-blue-950 text-white rounded-md transition duration-300' disabled={loading}>
+                {loading ? 'Loading...' : 'Login'}
+              </button>
               {error && <p className='text-red-400 mb-4 text-sm'>{error}</p>}
             </form>
             <div className="mt-6 w-full max-w-sm flex justify-between">
