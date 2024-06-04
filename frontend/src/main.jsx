@@ -16,6 +16,8 @@ import Income from './Components/Income/Income';
 import Expense from './Components/Expense/Expense';
 import Goals from './Components/Goals/Goals';
 import Visuals from './Components/Visuals/Visuals';
+import Board from './Components/Board/Board';
+import Savings from './Components/Savings/Savings';
 
 const router = createBrowserRouter([
   {
@@ -43,10 +45,10 @@ const router = createBrowserRouter([
         path:"/dashboard",
         element: <PrivateRoute><Dashboard/></PrivateRoute>,
         children: [
-          // {
-          //   path: "/dashboard/profile",
-          //   element: <p>Home<p/>,
-          // },
+          {
+            path: "/dashboard/",
+            element: <Board/>,
+          },
           {
             path: "/dashboard/income",
             element: <Income/>,
@@ -58,6 +60,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/goals",
             element: <Goals/>,
+          },
+          {
+            path: "/dashboard/savings",
+            element: <Savings/>,
           },
           {
             path: "/dashboard/visuals",

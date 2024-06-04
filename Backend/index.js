@@ -34,10 +34,123 @@ async function run() {
     const ExpenseCollection = client.db("MoneyMate").collection("expenses");
     const CategoryCollection = client.db("MoneyMate").collection("categories");
 
+    const SavingsCollection = client.db("MoneyMate").collection("savings");
+    const GoalCollection = client.db("MoneyMate").collection("goals");
+
+
+    //,,,,,,,,,,,,,
+    app.post('/goal', async (req, res) => {
+      const { email, name, amountNeeded, contribution } = req.body;
+      try {
+        const goal = await GoalCollection.insertOne({ email, name, amountNeeded: parseFloat(amountNeeded), contribution: parseFloat(contribution) });
+        res.status(201).send(goal);
+      } catch (error) {
+        res.status(400).json({ message: 'Error creating goal.' });
+      }
+    });
+    
+    app.get('/goals/:email', async (req, res) => {
+      const { email } = req.params;
+      try {
+        const goals = await GoalCollection.find({ email }).toArray();
+        res.status(200).send(goals);
+      } catch (error) {
+        res.status(400).json({ message: 'Error retrieving goals.' });
+      }
+    });
+    
+    app.patch('/goal/:id', async (req, res) => {
+      const { id } = req.params;
+      const { contribution } = req.body;
+      try {
+        const goal = await GoalCollection.findOne({ _id: new ObjectId(id) });
+        const updatedContribution = goal.contribution + parseFloat(contribution);
+        const updatedGoal = await GoalCollection.updateOne(
+          { _id: new ObjectId(id) },
+          { $set: { contribution: updatedContribution } }
+        );
+        res.status(200).send(updatedGoal);
+      } catch (error) {
+        res.status(400).json({ message: 'Error updating goal contribution.' });
+      }
+    });
+
+    app.delete('/goal/:id', async (req, res) => {
+      const { id } = req.params;
+      try {
+        const goal = await GoalCollection.deleteOne({ _id: new ObjectId(id) });
+        res.status(200).send(goal);
+      } catch (error) {
+        res.status(400).json({ message: 'Error deleting goal.' });
+      }
+    });
+
+    //.....................
+    app.post('/savings', async (req, res) => {
+      const { email, source, amount, date } = req.body;
+      try {
+        const saving = await SavingsCollection.insertOne({ email, source, amount: parseFloat(amount), date });
+        res.status(201).send(saving);
+      } catch (error) {
+        res.status(400).json({ message: 'Error creating saving.' });
+      }
+    });
+    
+    app.get('/savings/:email', async (req, res) => {
+      const { email } = req.params;
+      try {
+        const savings = await SavingsCollection.find({ email }).toArray();
+        res.status(200).send(savings);
+      } catch (error) {
+        res.status(400).json({ message: 'Error retrieving savings.' });
+      }
+    });
+    
+    app.delete('/savings/:id', async (req, res) => {
+      const { id } = req.params;
+      try {
+        const saving = await SavingsCollection.deleteOne({ _id: new ObjectId(id) });
+        res.status(200).send(saving);
+      } catch (error) {
+        res.status(400).json({ message: 'Error deleting saving.' });
+      }
+    });
+    //...................
+
+    app.delete('/category/:id', async (req, res) => {
+      const { id } = req.params;
+      try {
+        const category = await CategoryCollection.findOne({ _id: new ObjectId(id) });
+        if (!category) {
+          return res.status(404).json({ message: 'Category not found.' });
+        }
+        const categoryName = category.name;
+        await CategoryCollection.deleteOne({ _id: new ObjectId(id) });
+        const expenses = await ExpenseCollection.deleteMany({ category: categoryName });
+        res.status(200).send({ category, expenses });
+      } catch (error) {
+        res.status(400).json({ message: 'Error deleting category and associated expenses.' });
+      }
+    });
+
+    app.patch('/category/:id', async (req, res) => {
+      const { id } = req.params;
+      const { budget } = req.body;
+      try {
+        const updatedCategory = await CategoryCollection.updateOne({ _id: new ObjectId(id) }, { $set: { budget: parseFloat(budget) } });
+        res.status(200).send(updatedCategory);
+      } catch (error) {
+        res.status(400).json({ message: 'Error updating category budget.' });
+      }
+    });
+
     app.post('/income', async (req, res) => {
       const { email, source, amount, date } = req.body;
       try {
-        const income = await IncomeCollection.insertOne({ email: email, source: source, amount: amount, date: date });
+        if (isNaN(amount)) {
+          return res.status(400).json({ message: 'Invalid amount' });
+        }
+        const income = await IncomeCollection.insertOne({ email, source, amount: parseFloat(amount), date });
         res.status(201).send(income);
       } catch (error) {
         res.status(400).json({ message: 'Error creating income.' });
@@ -57,7 +170,7 @@ async function run() {
     app.get('/income/:email', async (req, res) => {
       const { email } = req.params;
       try {
-        const incomes = await IncomeCollection.find({ email: email }).toArray();
+        const incomes = await IncomeCollection.find({ email }).toArray();
         res.status(200).send(incomes);
       } catch (error) {
         res.status(400).json({ message: 'Error retrieving incomes.' });
@@ -65,9 +178,9 @@ async function run() {
     });
 
     app.post('/category', async (req, res) => {
-      const { email, name } = req.body;
+      const { email, name, budget } = req.body;
       try {
-        const category = await CategoryCollection.insertOne({ email: email, name: name });
+        const category = await CategoryCollection.insertOne({ email, name, budget: parseFloat(budget) });
         res.status(201).send(category);
       } catch (error) {
         res.status(400).json({ message: 'Error creating category.' });
@@ -77,7 +190,7 @@ async function run() {
     app.get('/categories/:email', async (req, res) => {
       const { email } = req.params;
       try {
-        const categories = await CategoryCollection.find({ email: email }).toArray();
+        const categories = await CategoryCollection.find({ email }).toArray();
         res.status(200).send(categories);
       } catch (error) {
         res.status(400).json({ message: 'Error retrieving categories.' });
@@ -87,7 +200,10 @@ async function run() {
     app.post('/expense', async (req, res) => {
       const { email, category, description, amount, date } = req.body;
       try {
-        const expense = await ExpenseCollection.insertOne({ email: email, category: category, description: description, amount: amount, date: date });
+        if (isNaN(amount)) {
+          return res.status(400).json({ message: 'Invalid amount' });
+        }
+        const expense = await ExpenseCollection.insertOne({ email, category, description, amount: parseFloat(amount), date });
         res.status(201).send(expense);
       } catch (error) {
         res.status(400).json({ message: 'Error creating expense.' });
@@ -97,7 +213,7 @@ async function run() {
     app.get('/expenses/:email', async (req, res) => {
       const { email } = req.params;
       try {
-        const expenses = await ExpenseCollection.find({ email: email }).toArray();
+        const expenses = await ExpenseCollection.find({ email }).toArray();
         res.status(200).send(expenses);
       } catch (error) {
         res.status(400).json({ message: 'Error retrieving expenses.' });
@@ -138,10 +254,12 @@ async function run() {
         return res.status(401).send({ error: "Invalid password" });
       }
       const token = jwt.sign({ email: user.email, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      res.status(200).send({ user: { email: user.email, username: user.username }, message: "Login successful", token: token });
+      res.status(200).send({ user: { email: user.email, username: user.username }, message: "Login successful", token });
     });
 
   } finally {
+    // Ensure client will close when you finish/error
+    // await client.close();
   }
 }
 run().catch(console.dir);
